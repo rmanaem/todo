@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 
 
 def home(request):
@@ -11,7 +11,7 @@ def home(request):
 
 def signupuser(request):
     if request.method == 'GET':
-        return render(request, 'signupuser.html', {'form': UserCreationForm()})
+        return render(request, 'signup.html', {'form': UserCreationForm()})
     else:
         if request.POST['password1'] == request.POST['password2']:
             try:
@@ -22,9 +22,22 @@ def signupuser(request):
                 login(request, user)
                 return redirect('dashboard')
             except IntegrityError:
-                return render(request, 'signupuser.html', {'form': UserCreationForm(), 'error': 'Username is unavailable'})
+                return render(request, 'signup.html', {'form': UserCreationForm(), 'error': 'Username is unavailable'})
         else:
-            return render(request, 'signupuser.html', {'form': UserCreationForm(), 'error': 'Passwords didn\'t match'})
+            return render(request, 'signup.html', {'form': UserCreationForm(), 'error': 'Passwords didn\'t match'})
+
+
+def loginuser(request):
+    if request.method == 'GET':
+        return render(request, 'login.html', {'form': AuthenticationForm()})
+    else:
+        user = authenticate(
+            request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request, 'login.html', {'form': AuthenticationForm(), 'error': 'Username and password didn\'t match'})
+        else:
+            login(request, user)
+            return redirect('dashboard')
 
 
 def logoutuser(request):
