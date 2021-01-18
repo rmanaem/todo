@@ -25,4 +25,5 @@ urlpatterns = [
     path('signup/', views.signupuser, name='signupuser'),
 
     # Todo
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]

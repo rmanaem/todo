@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.contrib.auth import login
 
 
 def signupuser(request):
@@ -14,7 +15,13 @@ def signupuser(request):
                 user = User.objects.create_user(
                     request.POST['username'], password=request.POST['password1'])
                 user.save()
+                login(request, user)
+                return redirect('dashboard')
             except IntegrityError:
                 return render(request, 'signupuser.html', {'form': UserCreationForm(), 'error': 'Username is unavailable'})
         else:
             return render(request, 'signupuser.html', {'form': UserCreationForm(), 'error': 'Passwords didn\'t match'})
+
+
+def dashboard(request):
+    return render(request, 'dashboard.html')
