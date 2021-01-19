@@ -19,7 +19,7 @@ def signupuser(request):
                     request.POST['username'], password=request.POST['password1'])
                 user.save()
                 login(request, user)
-                return redirect('dashboard')
+                return redirect('current')
             except IntegrityError:
                 return render(request, 'signup.html', {'form': UserCreationForm(), 'error': 'Username is unavailable'})
         else:
@@ -36,7 +36,7 @@ def loginuser(request):
             return render(request, 'login.html', {'form': AuthenticationForm(), 'error': 'Username and password didn\'t match'})
         else:
             login(request, user)
-            return redirect('dashboard')
+            return redirect('current')
 
 
 def logoutuser(request):
@@ -49,15 +49,15 @@ def home(request):
     return render(request, 'index.html')
 
 
-def dashboard(request):
+def current(request):
     todos = Todo.objects.filter(user=request.user, date_completed__isnull=True)
-    return render(request, 'dashboard.html', {'todos': todos})
+    return render(request, 'current.html', {'todos': todos})
 
 
-def archive(request):
+def completed(request):
     todos = Todo.objects.filter(
         user=request.user, date_completed__isnull=False).order_by('-date_completed')
-    return render(request, 'archive.html', {'todos': todos})
+    return render(request, 'completed.html', {'todos': todos})
 
 
 def create(request):
@@ -69,7 +69,7 @@ def create(request):
             todo = form.save(commit=False)
             todo.user = request.user
             todo.save()
-            return redirect('dashboard')
+            return redirect('current')
         except ValueError:
             return render(request, 'create.html', {'form': TodoForm(), 'error': 'Incorrect field entry. Try again.'})
 
@@ -83,7 +83,7 @@ def view(request, todo_pk):
         try:
             form = TodoForm(request.POST, instance=todo)
             form.save()
-            return redirect('dashboard')
+            return redirect('current')
         except ValueError:
             return render(request, 'view.html', {'todo': todo, 'form': form, 'error': 'Incorrect field entry. Try again.'})
 
@@ -93,11 +93,11 @@ def complete(request, todo_pk):
     if request.method == 'POST':
         todo.date_completed = timezone.now()
         todo.save()
-        return redirect('dashboard')
+        return redirect('current')
 
 
 def delete(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
         todo.delete()
-        return redirect('dashboard')
+        return redirect('current')
