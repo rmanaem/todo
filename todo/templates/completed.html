@@ -7,7 +7,7 @@ Archived
 <ul>
     {% for todo in todos %}
     <li>
-        <a href="{% url 'view' todo.id %}">
+        <a href="{% url 'todo' todo.id %}">
             {% if todo.important %}<b>{% endif %}{{ todo.title }}{% if todo.important %}</b>{% endif %}
             {% if todo.description %} - {{ todo.description }}{% endif %}
             | {{ todo.date_completed|date:'M j Y H:i' }}

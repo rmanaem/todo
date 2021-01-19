@@ -80,18 +80,18 @@ def create(request):
 
 
 @login_required
-def view(request, todo_pk):
+def todo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'GET':
         form = TodoForm(instance=todo)
-        return render(request, 'view.html', {'todo': todo, 'form': form})
+        return render(request, 'todo.html', {'todo': todo, 'form': form})
     else:
         try:
             form = TodoForm(request.POST, instance=todo)
             form.save()
             return redirect('current')
         except ValueError:
-            return render(request, 'view.html', {'todo': todo, 'form': form, 'error': 'Incorrect field entry. Try again.'})
+            return render(request, 'todo.html', {'todo': todo, 'form': form, 'error': 'Incorrect field entry. Try again.'})
 
 
 @login_required
