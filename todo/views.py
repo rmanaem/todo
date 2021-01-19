@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from .forms import TodoForm
+from .models import Todo
 
 
 def signupuser(request):
@@ -63,3 +64,8 @@ def create(request):
             return redirect('dashboard')
         except ValueError:
             return render(request, 'create.html', {'form': TodoForm(), 'error': 'Incorrect field entry. Try again.'})
+
+
+def view(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk)
+    return render(request, 'view.html', {'todo': todo})
