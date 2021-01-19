@@ -6,6 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import TodoForm
 from .models import Todo
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 
 def signupuser(request):
@@ -39,6 +40,7 @@ def loginuser(request):
             return redirect('current')
 
 
+@login_required
 def logoutuser(request):
     if request.method == 'POST':
         logout(request)
@@ -49,17 +51,20 @@ def home(request):
     return render(request, 'index.html')
 
 
+@login_required
 def current(request):
     todos = Todo.objects.filter(user=request.user, date_completed__isnull=True)
     return render(request, 'current.html', {'todos': todos})
 
 
+@login_required
 def completed(request):
     todos = Todo.objects.filter(
         user=request.user, date_completed__isnull=False).order_by('-date_completed')
     return render(request, 'completed.html', {'todos': todos})
 
 
+@login_required
 def create(request):
     if request.method == 'GET':
         return render(request, 'create.html', {'form': TodoForm()})
@@ -74,6 +79,7 @@ def create(request):
             return render(request, 'create.html', {'form': TodoForm(), 'error': 'Incorrect field entry. Try again.'})
 
 
+@login_required
 def view(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'GET':
@@ -88,6 +94,7 @@ def view(request, todo_pk):
             return render(request, 'view.html', {'todo': todo, 'form': form, 'error': 'Incorrect field entry. Try again.'})
 
 
+@login_required
 def complete(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
@@ -96,6 +103,7 @@ def complete(request, todo_pk):
         return redirect('current')
 
 
+@login_required
 def delete(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
