@@ -2,6 +2,13 @@
 
 
 {% block content %}
+
 Dashboard
+<ul>
+    {% for todo in todos %}
+    <li>{% if todo.important %}<b>{% endif %}{{ todo.title }}{% if todo.important %}</b>{% endif %}
+        {% if todo.description %} - {{ todo.description }}{% endif %}</li>
+    {% endfor %}
+</ul>
 
 {% endblock %}

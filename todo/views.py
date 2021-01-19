@@ -49,7 +49,8 @@ def home(request):
 
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    todos = Todo.objects.filter(user=request.user, date_completed__isnull=True)
+    return render(request, 'dashboard.html', {'todos': todos})
 
 
 def create(request):
