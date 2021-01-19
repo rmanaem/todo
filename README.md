@@ -22,7 +22,7 @@ manage.py runserver
 
 ## Features
 
-- The website has a fully functioning authentication system connected to the SQLite database. The sign up and login pages have been implemented using Django forms. Upon registration it will validate username and password.
+- The website has a fully functioning authentication system connected to the SQLite database. The sign up and login pages have been implemented using Django forms. Upon registration username and password are validated.
 - Todo objects are implemented using a model. Todos of all users are kept in the database and access to them is restricted to the user and the admin only. Todos can be created, updated, and deleted. Database entries will be automatically updated when the user changes the state of their todos.
 - Front end desing of the website has been done using bootstrap framework and is kept minimalistic.
 
