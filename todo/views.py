@@ -3,10 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-
-
-def home(request):
-    return render(request, 'index.html')
+from .forms import TodoForm
 
 
 def signupuser(request):
@@ -46,5 +43,23 @@ def logoutuser(request):
         return redirect('home')
 
 
+def home(request):
+    return render(request, 'index.html')
+
+
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+
+def create(request):
+    if request.method == 'GET':
+        return render(request, 'create.html', {'form': TodoForm()})
+    else:
+        try:
+            form = TodoForm(request.POST)
+            todo = form.save(commit=False)
+            todo.user = request.user
+            todo.save()
+            return redirect('dashboard')
+        except ValueError:
+            return render(request, 'create.html', {'form': TodoForm(), 'error': 'Incorrect field entry. Try again.'})
