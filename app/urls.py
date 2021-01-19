@@ -31,5 +31,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('create/', views.create, name='create'),
     path('todo/<int:todo_pk>', views.view, name='view'),
+    path('todo/<int:todo_pk>/complete', views.complete, name='complete'),
+    path('todo/<int:todo_pk>/delete', views.delete, name='delete'),
 
 ]

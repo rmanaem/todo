@@ -5,6 +5,7 @@ from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from .forms import TodoForm
 from .models import Todo
+from django.utils import timezone
 
 
 def signupuser(request):
@@ -79,3 +80,18 @@ def view(request, todo_pk):
             return redirect('dashboard')
         except ValueError:
             return render(request, 'view.html', {'todo': todo, 'form': form, 'error': 'Incorrect field entry. Try again.'})
+
+
+def complete(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        todo.date_completed = timezone.now()
+        todo.save()
+        return redirect('dashboard')
+
+
+def delete(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        todo.delete()
+        return redirect('dashboard')
