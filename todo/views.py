@@ -54,6 +54,12 @@ def dashboard(request):
     return render(request, 'dashboard.html', {'todos': todos})
 
 
+def archive(request):
+    todos = Todo.objects.filter(
+        user=request.user, date_completed__isnull=False).order_by('-date_completed')
+    return render(request, 'archive.html', {'todos': todos})
+
+
 def create(request):
     if request.method == 'GET':
         return render(request, 'create.html', {'form': TodoForm()})
