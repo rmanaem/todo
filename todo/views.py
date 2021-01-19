@@ -68,5 +68,14 @@ def create(request):
 
 
 def view(request, todo_pk):
-    todo = get_object_or_404(Todo, pk=todo_pk)
-    return render(request, 'view.html', {'todo': todo})
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'GET':
+        form = TodoForm(instance=todo)
+        return render(request, 'view.html', {'todo': todo, 'form': form})
+    else:
+        try:
+            form = TodoForm(request.POST, instance=todo)
+            form.save()
+            return redirect('dashboard')
+        except ValueError:
+            return render(request, 'view.html', {'todo': todo, 'form': form, 'error': 'Incorrect field entry. Try again.'})
