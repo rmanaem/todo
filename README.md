@@ -35,3 +35,7 @@ manage.py runserver
 [Django](https://docs.djangoproject.com/)
 
 [Bootstrap](https://getbootstrap.com/docs/)
+
+## License
+
+This repository is licensed under the [MIT License](https://github.com/rmanaem/todo-app/blob/master/LICENSE).
