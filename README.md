@@ -1,5 +1,7 @@
 # Todo
 
+<p alt="logo" align="center"><a href="https://github.com/rmanaem/todo/blob/master/todo/static/logo.png"><img src="https://github.com/rmanaem/todo/blob/master/todo/static/logo.png?raw=true" width=150/></a></p>
+
 Todo is a web application developed in Python using [Django](https://www.djangoproject.com/) and [Bootstrap](https://getbootstrap.com/docs/), designed to keep track of tasks.
 
 ## Features
@@ -21,7 +23,6 @@ You can then run the application by executing the following command in your term
 ```bash
 manage.py runserver
 ```
-
 
 ## License
 
