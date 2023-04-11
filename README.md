@@ -8,21 +8,17 @@ Todo is a web application developed in Python using [Django](https://www.djangop
 - Todo objects are implemented using a model. Todos of all users are kept in the database and access to them is restricted to the user and the admin only. Todos can be created, updated, and deleted. Database entries will be automatically updated when the user changes the state of their todos.
 - Front end desing of the website has been done using bootstrap framework and is kept minimalistic.
 
-## Installation
+## Local Installation
 
-If you do not have Python3 installed, you can download it [here](https://www.python.org/downloads/).
+To run the application you will need to install the dependencies outlined in [requirements.txt](requirements.txt). For convenience, you can use Python's `venv` package to install dependencies in a virtual environment. You can find the instructions on creating and activating a virtual environment in the official [documentation](https://docs.python.org/3.10/library/venv.html). After setting up and activating your environment, you can install the dependencies by running the following command in your terminal:
 
-Create a virtual environment, you can use [virtualenv](https://pypi.org/project/virtualenv/) package.
-
-Install the requirements:
-
-```
+```bash
 pip install -r requirements.txt
 ```
 
-Run the application:
+You can then run the application by executing the following command in your terminal:
 
-```
+```bash
 manage.py runserver
 ```
 
