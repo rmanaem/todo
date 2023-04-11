@@ -1,4 +1,4 @@
-# Todo Web Application
+# Todo
 
 Todo is a web application developed in Python3 using Django framework, designed to keep track of tasks, goals, etc.
 
