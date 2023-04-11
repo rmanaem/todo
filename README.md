@@ -25,4 +25,4 @@ manage.py runserver
 
 ## License
 
-This repository is licensed under the [MIT License](https://github.com/rmanaem/todo-app/blob/master/LICENSE).
+This repository is licensed under the terms of [MIT License](LICENSE).
